@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XV Maratón Solidario Fútbol Sala 2026</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+}
+
+.container{
+  width:100%;
+  max-width:850px;
+}
+
+.title-header {
+  text-align: center;
+  margin-bottom: 15px;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 12px;
+  border-bottom: 4px solid #facc15;
+}
+
+.title-header h1 {
+  font-size: 20px;
+  color: #facc15;
+}
+
+.title-header p {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+/* Panel superior dividido en dos columnas */
+.top-panel {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+@media(max-width: 650px) {
+  .top-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.clock-box{
+  background:#111827;
+  border:2px solid #00ffaa;
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.clock{
+  font-size:52px;
+  font-weight:bold;
+  color:#00ffaa;
+  letter-spacing: 1px;
+}
+
+.date{
+  margin-top:4px;
+  font-size:14px;
+  opacity:.7;
+}
+
+.current-match{
+  margin-top:14px;
+  background:#00ffaa;
+  color:#001b14;
+  border-radius:12px;
+  padding:14px;
+}
+
+.match-teams{
+  font-size:20px;
+  font-weight:bold;
+  margin: 2px 0;
+}
+
+.match-category{
+  font-size:13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.time-range{
+  font-size:12px;
+  font-weight: bold;
+  opacity:.85;
+}
+
+.countdown-box {
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Panel de Precios del Bar (Columna derecha) */
+.bar-box {
+  background: #111827;
+  border: 2px solid #facc15;
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.bar-title {
+  color: #facc15;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.3);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.item-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-price {
+  background: #facc15;
+  color: #000;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+
+/* Panel de Recordatorio debajo del bloque superior */
+.notice-box {
+  background: #1e1b4b; 
+  border: 2px solid #ef4444; 
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.notice-title {
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.notice-text {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #f3f4f6;
+}
+
+.notice-highlight {
+  color: #facc15;
+  font-weight: bold;
+}
+
+.schedule{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#111827;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+th{
+  background:#1e293b;
+  color:#00ffaa;
+  padding:10px 8px;
+  font-size:13px;
+  text-transform: uppercase;
+}
+
+td{
+  border:1px solid rgba(255,255,255,.05);
+  padding:9px 8px;
+  text-align:center;
+  font-size:13px;
+}
+
+/* Colores de Categorías basados en la imagen original */
+.cat-alevin { background: #facc15; color: #000; font-weight: bold; }
+.cat-prebenjamin { background: #4ade80; color: #000; font-weight: bold; }
+.cat-benjamin { background: #f97316; color: #fff; font-weight: bold; }
+.cat-pitufos { background: #38bdf8; color: #000; font-weight: bold; }
+.row-descanso { background: #ef4444; color: #fff; font-weight: bold; }
+.row-trofeos { background: #dc2626; color: #fff; font-weight: bold; }
+
+.match-num {
+  background:#1e293b;
+  font-weight:bold;
+}
+
+.time-cell {
+  font-weight: bold;
+  color: #e2e8f0;
+}
+
+.team-cell {
+  text-align: left;
+  padding-left: 15px;
+  font-weight: 500;
+}
+
+.active{
+  background:#00ffaa !important;
+  color:#001b14 !important;
+}
+.active td {
+  color: #001b14 !important;
+  background: transparent !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="title-header">
+    <h1>CUADRANTE XV MARATÓN SOLIDARIO FÚTBOL SALA 2026</h1>
+    <p>C.C. NTRA. SRA. DE LAS MERCEDES TARANCÓN</p>
+  </div>
+
+  <!-- Contenedor Superior Dual: Reloj/Partido + Precios Bar -->
+  <div class="top-panel">
+    
+    <!-- Bloque Izquierdo: Reloj y Partido Activo -->
+    <div class="clock-box">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="date" id="date">Cargando fecha...</div>
+
+      <div class="current-match">
+        <div class="match-category" id="liveCategory">ESTADO</div>
+        <div class="match-teams" id="liveMatch">Cargando partidos...</div>
+        <div class="time-range" id="liveTime">--:--</div>
+        <div class="countdown-box" id="countdown">Siguiente sección en: --:--</div>
+      </div>
+    </div>
+
+    <!-- Bloque Derecho: Lista de Precios del Bar -->
+    <div class="bar-box">
+      <div class="bar-title">🍺 Precios Bar 🍔</div>
+      <div class="bar-menu">
+        <div class="bar-item">
+          <span class="item-name">💧 Agua</span>
+          <span class="item-price">1,00 €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🥤 Refresco</span>
+          <span class="item-price">2,00 €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🍺 Cerveza</span>
+          <span class="item-price">2,00 €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🥃 Cubalibre</span>
+          <span class="item-price">5,00 €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🍦 Helados</span>
+          <span class="item-price">-- €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🍿 Gusanitos</span>
+          <span class="item-price">-- €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🥖 Bocatas</span>
+          <span class="item-price">-- €</span>
+        </div>
+        <div class="bar-item">
+          <span class="item-name">🥪 Montados</span>
+          <span class="item-price">-- €</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Cuadro de Recordatorio para Equipos (Debajo del bloque del tiempo y bar) -->
+  <div class="notice-box">
+    <div class="notice-title">⚠️ ¡AVISO IMPORTANTE PARA LOS EQUIPOS!</div>
+    <div class="notice-text">
+      Por favor, <span class="notice-highlight">colóquense en la fila mínimo 5 minutos antes de empezar el partido</span>. Todo el tiempo que se pierda en el cambio de equipos, <span class="notice-highlight">se perderá a la hora de jugar</span>.
+          Si los dos equipos <span class="notice-highlight">llevan el mismo color de camiseta</span>, se echará a suertes quien llevará petos.
+    </div>
+  </div>
+
+  <div class="schedule">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 8%;">Nº</th>
+          <th style="width: 18%;">Hora</th>
+          <th>Partido</th>
+          <th style="width: 25%;">Categoría</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!-- Generado dinámicamente por JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const torneoData = [
+  { n: 1, start: "16:00", end: "16:15", match: "TORNADO ESPORT VS LOS SIN NOMBRE", cat: "ALEVÍN", type: "alevin" },
+  { n: 2, start: "16:15", end: "16:30", match: "TIKITAKA F.C. VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
+  { n: 3, start: "16:30", end: "16:50", match: "FURIA AZUL VS LOS FUTBOLÍSIMOS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
+  { n: 4, start: "16:50", end: "17:10", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin" },
+  { n: 5, start: "17:10", end: "17:30", match: "LOS CAMPEONES VS LAS LEYENDAS", cat: "BENJAMÍN", type: "benjamin" },
+  { n: 6, start: "17:30", end: "17:45", match: "TORNADO ESPORT VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin" },
+  { n: 7, start: "17:45", end: "18:00", match: "LOS SIN NOMBRE VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
+  { n: 8, start: "18:00", end: "18:20", match: "LOS CAMPEONES VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin" },
+  { n: 9, start: "18:20", end: "18:35", match: "LOS RAYOS VS LOS PITUFINES", cat: "PITUFOS", type: "pitufos" },
+  { n: 10, start: "18:35", end: "18:50", match: "LOS FUTBOLÍSIMOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
+  { n: 11, start: "18:50", end: "19:10", match: "FURIA AZUL VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
+  { n: 12, start: "19:10", end: "19:30", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin" },
+  { n: 13, start: "19:30", end: "19:45", match: "LOS RAYOS VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos" },
+  { n: 14, start: "19:45", end: "20:00", match: "LOS PITUFINES VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
+  { n: 15, start: "20:00", end: "20:15", match: "TORNADO ESPORT VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
+  { n: 16, start: "20:15", end: "20:30", match: "LOS PITUFINES VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos" },
+  { n: 17, start: "20:30", end: "20:45", match: "LOS RAYOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
+  
+  { n: "D", start: "20:45", end: "21:35", match: "DESCANSO (Cena, bingo solidario...)", cat: "DESCANSO", type: "descanso" },
+  
+  { n: 18, start: "21:35", end: "21:55", match: "FINAL (1º VS 2º CLASIFICADO)\nEntrega de copas y medallas en el bar..", cat: "PITUFOS", type: "pitufos" },
+  { n: 19, start: "21:55", end: "22:10", match: "LOS SIN NOMBRE VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin" },
+  { n: 20, start: "22:10", end: "22:30", match: "LOS FUTBOLÍSIMOS VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
+  { n: 21, start: "22:30", end: "22:50", match: "LAS LEYENDAS VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin" },
+  { n: 22, start: "22:55", end: "23:15", match: "FINAL (1º G1 VS 1º G2)", cat: "PREBENJAMÍN", type: "prebenjamin" },
+  { n: 23, start: "23:20", end: "23:40", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "BENJAMÍN", type: "benjamin" },
+  { n: 24, start: "23:45", end: "00:05", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "ALEVÍN", type: "alevin" },
+  
+  { n: "T", start: "00:10", end: "02:00", match: "ENTREGA DE TROFEOS", cat: "TROFEOS", type: "trofeos" }
+];
+
+const tbody = document.getElementById("table-body");
+torneoData.forEach((item) => {
+  const tr = document.createElement("tr");
+  tr.id = `row-${item.start.replace(':', '')}`;
+  
+  if (item.type === "descanso") {
+    tr.className = "row-descanso";
+    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}/${item.end}</td><td colspan="2">${item.match}</td>`;
+  } else if (item.type === "trofeos") {
+    tr.className = "row-trofeos";
+    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}</td><td colspan="2">${item.match}</td>`;
+  } else {
+    const matchFormat = item.match.replace('\n', '<br><span style="font-size:11px; opacity:0.8;">') + (item.match.includes('\n') ? '</span>' : '');
+    tr.innerHTML = `
+      <td class="match-num">${item.n}</td>
+      <td class="time-cell">${item.start}/${item.end}</td>
+      <td class="team-cell">${matchFormat}</td>
+      <td class="cat-${item.type}">${item.cat}</td>
+    `;
+  }
+  tbody.appendChild(tr);
+});
+
+function getMadridTime() {
+  const now = new Date();
+  const fmtTime = new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid', hour:'2-digit', minute:'2-digit', second:'2-digit'
+  });
+  const fmtDate = new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid', weekday:'long', day:'numeric', month:'long', year:'numeric'
+  });
+  return { now, t: fmtTime.format(now), d: fmtDate.format(now) };
+}
+
+function update(){
+  const { now, t, d } = getMadridTime();
+  document.getElementById("clock").textContent = t;
+  document.getElementById("date").textContent = d;
+
+  const currentHM = t.slice(0, 5);
+  document.querySelectorAll("tr").forEach(e => e.classList.remove("active"));
+
+  let currentActive = null;
+
+  for (const item of torneoData) {
+    let isCurrent = false;
+    if (item.start > item.end) {
+      isCurrent = (currentHM >= item.start || currentHM < item.end);
+    } else {
+      isCurrent = (currentHM >= item.start && currentHM < item.end);
+    }
+
+    if (isCurrent) {
+      currentActive = item;
+      const rowId = `row-${item.start.replace(':', '')}`;
+      const cell = document.getElementById(rowId);
+      if (cell) cell.classList.add("active");
+      break;
+    }
+  }
+
+  const liveCat = document.getElementById("liveCategory");
+  const liveMatch = document.getElementById("liveMatch");
+  const liveTime = document.getElementById("liveTime");
+  const countdownEl = document.getElementById("countdown");
+
+  if (currentActive) {
+    liveCat.textContent = `EN JUEGO: ${currentActive.cat}`;
+    liveMatch.innerHTML = currentActive.match.replace('\n', ' - ');
+    liveTime.textContent = `${currentActive.start} hs a ${currentActive.end} hs`;
+
+    const [endH, endM] = currentActive.end.split(":").map(Number);
+    let targetDate = new Date(now);
+    targetDate.setHours(endH, endM, 0, 0);
+
+    if (currentActive.start > currentActive.end && now.getHours() >= 23) {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
+
+    const diffMs = targetDate - now;
+
+    if (diffMs > 0) {
+      const diffMin = Math.floor(diffMs / 1000 / 60);
+      const diffSec = Math.floor((diffMs / 1000) % 60);
+      const strMin = String(diffMin).padStart(2, '0');
+      const strSec = String(diffSec).padStart(2, '0');
+      countdownEl.textContent = `Siguiente sección en: ${strMin}:${strSec}`;
+      countdownEl.style.display = "inline-block";
+    } else {
+      countdownEl.textContent = `Cambiando de sección...`;
+    }
+
+  } else {
+    if (currentHM >= "00:10" && currentHM < "16:00") {
+      liveCat.textContent = "MARATÓN FINALIZADA / PRÓXIMA";
+      liveMatch.textContent = "No hay partidos en juego en este momento";
+      liveTime.textContent = "Próxima edición 2026";
+    } else {
+      liveCat.textContent = "DESCANSO INESPERADO";
+      liveMatch.textContent = "Fuera de tiempo de juego establecido";
+      liveTime.textContent = "--:--";
+    }
+    countdownEl.style.display = "none";
+  }
+}
+
+setInterval(update, 1000);
+update();
+</script>
+
+</body>
+</html>
