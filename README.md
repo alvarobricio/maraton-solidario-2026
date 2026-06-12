@@ -1,1 +1,4 @@
-# maraton-solidario-2026
+XV MARATÓN SOLIDARIO FÚTBOL SALA 2026
+C.C. NTRA. SRA. DE LAS MERCEDES TARANCÓN
+
+Hecho por Álvaro Bricio
