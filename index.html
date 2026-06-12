@@ -483,12 +483,12 @@ function update(){
 
   } else {
     if (currentHM >= "00:10" && currentHM < "16:00") {
-      liveCat.textContent = "MARATÓN FINALIZADA / PRÓXIMA";
+      liveCat.textContent = "MARATÓN FINALIZADA";
       liveMatch.textContent = "No hay partidos en juego en este momento";
-      liveTime.textContent = "Próxima edición 2026";
+      liveTime.textContent = "Próxima edición 2027";
     } else {
-      liveCat.textContent = "DESCANSO INESPERADO";
-      liveMatch.textContent = "Fuera de tiempo de juego establecido";
+      liveCat.textContent = "DESCANSO";
+      liveMatch.textContent = "Por favor, espera al siguiente partido";
       liveTime.textContent = "--:--";
     }
     countdownEl.style.display = "none";
