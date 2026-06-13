@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>XV Maratón Solidario Fútbol Sala 2026</title>
+<link rel="icon" type="image/png" href="PEGA_AQUI_TU_ENLACE_IMGBB_FAVICON">
 
 <style>
 *{
@@ -46,6 +47,15 @@ body{
   font-size: 13px;
   opacity: 0.8;
   margin-top: 4px;
+}
+
+.logo-maraton{
+  width:120px;
+  max-width:80%;
+  display:block;
+  margin:0 auto 12px auto;
+  border-radius:16px;
+  box-shadow:0 0 20px rgba(250,204,21,.4);
 }
 
 /* Panel superior dividido en dos columnas */
@@ -260,6 +270,19 @@ td{
   color: #001b14 !important;
   background: transparent !important;
 }
+
+.result-cell{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  cursor:pointer;
+  min-width:70px;
+}
+
+.result-cell:hover{
+  filter:brightness(1.15);
+}
 </style>
 </head>
 
@@ -268,13 +291,21 @@ td{
 <div class="container">
 
   <div class="title-header">
+
+    <img
+      src="PEGA_AQUI_TU_ENLACE_IMGBB_LOGO"
+      alt="Logo Maratón"
+      class="logo-maraton"
+    >
+
     <h1>CUADRANTE XV MARATÓN SOLIDARIO FÚTBOL SALA 2026</h1>
     <p>C.C. NTRA. SRA. DE LAS MERCEDES TARANCÓN</p>
+
   </div>
 
   <!-- Contenedor Superior Dual: Reloj/Partido + Precios Bar -->
   <div class="top-panel">
-    
+
     <!-- Bloque Izquierdo: Reloj y Partido Activo -->
     <div class="clock-box">
       <div class="clock" id="clock">00:00:00</div>
@@ -346,7 +377,8 @@ td{
           <th style="width: 8%;">Nº</th>
           <th style="width: 18%;">Hora</th>
           <th>Partido</th>
-          <th style="width: 25%;">Categoría</th>
+          <th style="width: 22%;">Categoría</th>
+          <th style="width: 12%;">Resultado</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -358,34 +390,34 @@ td{
 
 <script>
 const torneoData = [
-  { n: 1, start: "16:00", end: "16:15", match: "TORNADO ESPORT VS LOS SIN NOMBRE", cat: "ALEVÍN", type: "alevin" },
-  { n: 2, start: "16:15", end: "16:30", match: "TIKITAKA F.C. VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
-  { n: 3, start: "16:30", end: "16:50", match: "FURIA AZUL VS LOS FUTBOLÍSIMOS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
-  { n: 4, start: "16:50", end: "17:10", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin" },
-  { n: 5, start: "17:10", end: "17:30", match: "LOS CAMPEONES VS LAS LEYENDAS", cat: "BENJAMÍN", type: "benjamin" },
-  { n: 6, start: "17:30", end: "17:45", match: "TORNADO ESPORT VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin" },
-  { n: 7, start: "17:45", end: "18:00", match: "LOS SIN NOMBRE VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
-  { n: 8, start: "18:00", end: "18:20", match: "LOS CAMPEONES VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin" },
-  { n: 9, start: "18:20", end: "18:35", match: "LOS RAYOS VS LOS PITUFINES", cat: "PITUFOS", type: "pitufos" },
-  { n: 10, start: "18:35", end: "18:50", match: "LOS FUTBOLÍSIMOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
-  { n: 11, start: "18:50", end: "19:10", match: "FURIA AZUL VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
-  { n: 12, start: "19:10", end: "19:30", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin" },
-  { n: 13, start: "19:30", end: "19:45", match: "LOS RAYOS VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos" },
-  { n: 14, start: "19:45", end: "20:00", match: "LOS PITUFINES VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
-  { n: 15, start: "20:00", end: "20:15", match: "TORNADO ESPORT VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin" },
-  { n: 16, start: "20:15", end: "20:30", match: "LOS PITUFINES VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos" },
-  { n: 17, start: "20:30", end: "20:45", match: "LOS RAYOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos" },
-  
+  { n: 1, start: "16:00", end: "16:15", match: "TORNADO ESPORT VS LOS SIN NOMBRE", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 2, start: "16:15", end: "16:30", match: "TIKITAKA F.C. VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 3, start: "16:30", end: "16:50", match: "FURIA AZUL VS LOS FUTBOLÍSIMOS", cat: "PREBENJAMÍN G1", type: "prebenjamin", result: "-" },
+  { n: 4, start: "16:50", end: "17:10", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin", result: "-" },
+  { n: 5, start: "17:10", end: "17:30", match: "LOS CAMPEONES VS LAS LEYENDAS", cat: "BENJAMÍN", type: "benjamin", result: "-" },
+  { n: 6, start: "17:30", end: "17:45", match: "TORNADO ESPORT VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 7, start: "17:45", end: "18:00", match: "LOS SIN NOMBRE VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 8, start: "18:00", end: "18:20", match: "LOS CAMPEONES VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin", result: "-" },
+  { n: 9, start: "18:20", end: "18:35", match: "LOS RAYOS VS LOS PITUFINES", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 10, start: "18:35", end: "18:50", match: "LOS FUTBOLÍSIMOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 11, start: "18:50", end: "19:10", match: "FURIA AZUL VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin", result: "-" },
+  { n: 12, start: "19:10", end: "19:30", match: "LOS TIGRES VS SUPER CRACKS", cat: "PREBENJAMÍN G2", type: "prebenjamin", result: "-" },
+  { n: 13, start: "19:30", end: "19:45", match: "LOS RAYOS VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 14, start: "19:45", end: "20:00", match: "LOS PITUFINES VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 15, start: "20:00", end: "20:15", match: "TORNADO ESPORT VS SOBREVIVIENTES DEL LUNES", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 16, start: "20:15", end: "20:30", match: "LOS PITUFINES VS LOS FUTBOLÍSIMOS", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 17, start: "20:30", end: "20:45", match: "LOS RAYOS VS PEQUEÑOS GIGANTES", cat: "PITUFOS", type: "pitufos", result: "-" },
+
   { n: "D", start: "20:45", end: "21:35", match: "DESCANSO (Cena, bingo solidario...)", cat: "DESCANSO", type: "descanso" },
-  
-  { n: 18, start: "21:35", end: "21:55", match: "FINAL (1º VS 2º CLASIFICADO)\nEntrega de copas y medallas en el bar..", cat: "PITUFOS", type: "pitufos" },
-  { n: 19, start: "21:55", end: "22:10", match: "LOS SIN NOMBRE VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin" },
-  { n: 20, start: "22:10", end: "22:30", match: "LOS FUTBOLÍSIMOS VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin" },
-  { n: 21, start: "22:30", end: "22:50", match: "LAS LEYENDAS VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin" },
-  { n: 22, start: "22:55", end: "23:15", match: "FINAL (1º G1 VS 1º G2)", cat: "PREBENJAMÍN", type: "prebenjamin" },
-  { n: 23, start: "23:20", end: "23:40", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "BENJAMÍN", type: "benjamin" },
-  { n: 24, start: "23:45", end: "00:05", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "ALEVÍN", type: "alevin" },
-  
+
+  { n: 18, start: "21:35", end: "21:55", match: "FINAL (1º VS 2º CLASIFICADO)\nEntrega de copas y medallas en el bar..", cat: "PITUFOS", type: "pitufos", result: "-" },
+  { n: 19, start: "21:55", end: "22:10", match: "LOS SIN NOMBRE VS TIKITAKA F.C.", cat: "ALEVÍN", type: "alevin", result: "-" },
+  { n: 20, start: "22:10", end: "22:30", match: "LOS FUTBOLÍSIMOS VS LOS CAPIS", cat: "PREBENJAMÍN G1", type: "prebenjamin", result: "-" },
+  { n: 21, start: "22:30", end: "22:50", match: "LAS LEYENDAS VS LOS BICHOS", cat: "BENJAMÍN", type: "benjamin", result: "-" },
+  { n: 22, start: "22:55", end: "23:15", match: "FINAL (1º G1 VS 1º G2)", cat: "PREBENJAMÍN", type: "prebenjamin", result: "-" },
+  { n: 23, start: "23:20", end: "23:40", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "BENJAMÍN", type: "benjamin", result: "-" },
+  { n: 24, start: "23:45", end: "00:05", match: "FINAL (1º VS 2º CLASIFICADO)", cat: "ALEVÍN", type: "alevin", result: "-" },
+
   { n: "T", start: "00:10", end: "01:00", match: "ENTREGA DE TROFEOS", cat: "TROFEOS", type: "trofeos" }
 ];
 
@@ -393,13 +425,13 @@ const tbody = document.getElementById("table-body");
 torneoData.forEach((item) => {
   const tr = document.createElement("tr");
   tr.id = `row-${item.start.replace(':', '')}`;
-  
+
   if (item.type === "descanso") {
     tr.className = "row-descanso";
-    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}/${item.end}</td><td colspan="2">${item.match}</td>`;
+    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}/${item.end}</td><td colspan="3">${item.match}</td>`;
   } else if (item.type === "trofeos") {
     tr.className = "row-trofeos";
-    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}</td><td colspan="2">${item.match}</td>`;
+    tr.innerHTML = `<td class="match-num">${item.n}</td><td class="time-cell">${item.start}</td><td colspan="3">${item.match}</td>`;
   } else {
     const matchFormat = item.match.replace('\n', '<br><span style="font-size:11px; opacity:0.8;">') + (item.match.includes('\n') ? '</span>' : '');
     tr.innerHTML = `
@@ -407,6 +439,7 @@ torneoData.forEach((item) => {
       <td class="time-cell">${item.start}/${item.end}</td>
       <td class="team-cell">${matchFormat}</td>
       <td class="cat-${item.type}">${item.cat}</td>
+      <td class="result-cell" onclick="editarResultado(this, ${item.n})">${item.result || "-"}</td>
     `;
   }
   tbody.appendChild(tr);
@@ -494,6 +527,23 @@ function update(){
     countdownEl.style.display = "none";
   }
 }
+
+
+function editarResultado(celda, indice){
+  const actual = celda.textContent.trim();
+  const nuevo = prompt("Introduce resultado (ej: 3-2)", actual === "-" ? "" : actual);
+  if(nuevo === null) return;
+  celda.textContent = nuevo || "-";
+  localStorage.setItem("resultado_" + indice, celda.textContent);
+}
+
+window.addEventListener("load", ()=>{
+  document.querySelectorAll(".result-cell").forEach((celda)=>{
+    const fila = celda.parentElement.firstElementChild.textContent.trim();
+    const guardado = localStorage.getItem("resultado_" + fila);
+    if(guardado) celda.textContent = guardado;
+  });
+});
 
 setInterval(update, 1000);
 update();
